@@ -1,0 +1,3 @@
+CREATE DATABASE IF NOT EXISTS pantry_auth;
+CREATE DATABASE IF NOT EXISTS pantry_inventory;
+CREATE DATABASE IF NOT EXISTS pantry_restaurant;
