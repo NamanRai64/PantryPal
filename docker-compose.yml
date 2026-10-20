@@ -60,6 +60,19 @@ services:
     networks:
       - pantrypal-network
 
+  ai-service:
+    build:
+      context: ./services/ai-service
+      dockerfile: Dockerfile
+    container_name: pantrypal-ai-service
+    restart: on-failure
+    ports:
+      - "8084:8084"
+    environment:
+      GEMINI_API_KEY: ${GEMINI_API_KEY}
+    networks:
+      - pantrypal-network
+
   gateway:
     build:
       context: ./gateway
@@ -69,11 +82,13 @@ services:
     depends_on:
       - auth-service
       - inventory-service
+      - ai-service
     ports:
       - "8082:8082"
     environment:
       AUTH_SERVICE_URI: http://auth-service:8081
       INVENTORY_SERVICE_URI: http://inventory-service:8083
+      AI_SERVICE_URI: http://ai-service:8084
     networks:
       - pantrypal-network
 
